@@ -12,7 +12,7 @@ require Exporter;
 @ISA = qw(Exporter AutoLoader Business::OnlinePayment);
 @EXPORT = qw();
 @EXPORT_OK = qw();
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 $DEBUG = 0;
 
@@ -101,6 +101,8 @@ sub submit {
     my $pd = make_form(%post_data);
     my($page,$server_response,%headers) = post_https($s,$p,$t,'',$pd);
 
+    $page =~ s/\r*\n*$//;
+
     #warn join('-',%headers);
     #warn $page;
     my %response = map { split('=',$_,2) } split(/\|/,$page);
@@ -169,7 +171,7 @@ documentation is publicly available.
 
 =head1 AUTHOR
 
-Ivan Kohler <ivan-jettis@420.am>
+Ivan Kohler <ivan-payconnect@420.am>
 
 =head1 SEE ALSO
 
